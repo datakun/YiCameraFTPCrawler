@@ -7,9 +7,10 @@ import os
 import config
 
 
-def save_from_ftp(ftp_url, username, password, server_directory, local_directory):
+def save_from_ftp(ftp_url, ftp_port, username, password, server_directory, local_directory):
     # 23일마다 파일을 정리해야 함. 하루에 대략 6.5GB, 라즈베리파이 가용 용량은 대략 150GB, 6.5 / 150 = 23.xxx
-    ftp = ftplib.FTP(ftp_url)
+    ftp = ftplib.FTP()
+    ftp.connect(ftp_url, ftp_port)
     ftp.login(username, password)
     ftp.cwd(server_directory)
 
@@ -34,11 +35,9 @@ def save_from_ftp(ftp_url, username, password, server_directory, local_directory
 
         print('"' + file + '" is downloaded.')
 
-        break
-
 
 if __name__ == "__main__":
     target_datetime = datetime.datetime.now() + datetime.timedelta(hours=-1)
     target_time = target_datetime.strftime('%YY%mM%dD%HH')
 
-    save_from_ftp(config.FTP_URL, config.USERNAME, config.PASSWORD, '/tmp/hd1/record/' + target_time + '/', './')
+    save_from_ftp(config.FTP_URL, config.FTP_PORT, config.USERNAME, config.PASSWORD, '/tmp/hd1/record/' + target_time + '/', './')
