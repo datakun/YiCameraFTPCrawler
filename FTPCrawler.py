@@ -36,8 +36,9 @@ def save_from_ftp(ftp_url, ftp_port, username, password, server_directory, local
         print('"' + file + '" is downloaded.')
 
 
-if __name__ == "__main__":
+def backup_last_hour():
     target_datetime = datetime.datetime.now() + datetime.timedelta(hours=-1)
     target_time = target_datetime.strftime('%YY%mM%dD%HH')
 
-    save_from_ftp(config.FTP_URL, config.FTP_PORT, config.USERNAME, config.PASSWORD, '/tmp/hd1/record/' + target_time + '/', './')
+    save_from_ftp(config.FTP_URL, config.FTP_PORT, config.USERNAME, config.PASSWORD,
+                  '/tmp/hd1/record/' + target_time + '/', './')
