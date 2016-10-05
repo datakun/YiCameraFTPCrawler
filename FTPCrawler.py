@@ -33,7 +33,7 @@ def save_from_ftp(ftp_url, ftp_port, username, password, server_directory, local
 
         fd.close()
 
-        print('"' + file + '" is downloaded.')
+        print('"' + local_directory + file + '" is downloaded.')
 
 
 if __name__ == "__main__":
