@@ -33,12 +33,26 @@ def save_from_ftp(ftp_url, ftp_port, username, password, server_directory, local
 
         fd.close()
 
-        print('"' + file + '" is downloaded.')
+        print('"' + local_directory + file + '" is downloaded.')
 
 
 def backup_last_hour():
     target_datetime = datetime.datetime.now() + datetime.timedelta(hours=-1)
     target_time = target_datetime.strftime('%YY%mM%dD%HH')
 
-    save_from_ftp(config.FTP_URL, config.FTP_PORT, config.USERNAME, config.PASSWORD,
-                  '/tmp/hd1/record/' + target_time + '/', './')
+    ftp_url_list = config.FTP_URL.split(' ')
+    ftp_port_list = config.FTP_PORT.split(' ')
+    username_list = config.USERNAME.split(' ')
+    password_list = config.PASSWORD.split(' ')
+    
+    index = 0
+    for url in ftp_url_list:
+        dir_name = os.path.expanduser('~') + '/videos/' + url + '/' + target_time + '/'
+
+        if os.path.isdir(dir_name) is False:
+            os.makedirs(os.path.expanduser('~') + '/videos/' + url + '/' + target_time + '/')
+
+        save_from_ftp(url, int(ftp_port_list[index]), username_list[index], password_list[index], '/tmp/hd1/record/'
+                      + target_time + '/', os.path.expanduser('~') + '/videos/' + url + '/' + target_time + '/')
+
+        index += 1
