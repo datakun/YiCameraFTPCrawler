@@ -47,5 +47,6 @@ if __name__ == "__main__":
     
     index = 0
     for url in ftp_url_list:
-        save_from_ftp(url, int(ftp_port_list[index]), username_list[index], password_list[index], '/tmp/hd1/record/' + target_time + '/', '~/videos' + target_time + '/')
+        os.makedirs('~/videos/' + url + '/' + target_time + '/')
+        save_from_ftp(url, int(ftp_port_list[index]), username_list[index], password_list[index], '/tmp/hd1/record/' + target_time + '/', '~/videos/' + url + '/' + target_time + '/')
         index += 1
